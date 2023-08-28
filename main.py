@@ -1,5 +1,6 @@
 import subprocess
 from simple_term_menu import TerminalMenu
+from modules.boto_client import SsmClient
 
 def get_aws_profiles_list() -> list:
     """
@@ -17,7 +18,12 @@ def main():
     options = get_aws_profiles_list()
     terminal_menu = TerminalMenu(options)
     menu_entry_index = terminal_menu.show()
-    print(f"You have selected {options[menu_entry_index]}!")
+    profile_name = options[menu_entry_index]
+
+    ssm_client = SsmClient(profile_name)
+    # print(ssm_client.get_parameter("/dev/api/claims/opb_dns"))
+    print(ssm_client.get_parameter("/test/parameter/one"))
+
 
 if __name__ == "__main__":
     main()
