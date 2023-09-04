@@ -74,7 +74,7 @@ Next, user must specify the name of the variable that will be associated with th
 
 ```shell
 parameter name: /dev/claims/api
-What is the name of the settingyou want to set parameter for? 
+What is the name of the setting you want to set parameter for? 
 ```
 There are 2 simple rules for for the naming of a setting:
 - it must be written with lowercase letters
