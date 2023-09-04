@@ -6,3 +6,6 @@ config.ini
 
 # Virtual Environment
 venv/
+
+# Python files
+__pycache__/
