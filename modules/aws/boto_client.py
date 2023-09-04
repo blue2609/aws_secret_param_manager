@@ -1,5 +1,7 @@
 import boto3
 import pprint
+from ..aws.ssm.constants.parameter_store import SSM_PARAMETER_TYPE
+
 
 class BotoClient:
     def __init__(self, profile_name: str, aws_service: str):
@@ -24,3 +26,18 @@ class SsmClient(BotoClient):
             WithDecryption=True
         )
         return pprint.pformat(param_value)
+
+    def create_parameter(self, param_name: str, value: str, type: SSM_PARAMETER_TYPE):
+        """
+        Create a new SSM parameter in SSM parameter store
+
+        Args:
+            param_name (str): The parameter name of the new parameter created
+            value (str): The value that will be set for new parameter created
+            type (SSM_PARAMETER_TYPE): one of the 3 predefined types of SSM parameter store
+        """
+        self.client.put_parameter(
+            Name=param_name,
+            Value=value,
+            Type=type.value
+        )
