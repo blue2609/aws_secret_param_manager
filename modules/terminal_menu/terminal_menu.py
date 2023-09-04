@@ -38,6 +38,6 @@ class ParameterSetupSelection:
     def get_user_selection(cls):
         cls.show_and_record_selection(cls.env_selection)
         cls.set_key_from_user_input("service name")
-        cls.set_key_from_user_input("variable name")
+        cls.set_key_from_user_input("name of the setting")
         cls.get_value_from_user()
 
