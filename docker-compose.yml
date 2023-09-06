@@ -1,0 +1,19 @@
+version: "3"
+services:
+  api:
+    # # Uncomment and update the following line if you are running a pre-built container.
+    # image: registry.gitlab.com/huddle-insurance/open-platform/aws-raptor:latest
+    # Comment the following three lines if you are running a pre-built container.
+    build:
+      context: .
+    restart: always
+    # Comment the following two lines if you are running a pre-built container.
+    volumes:
+      - .:/app
+      - /Users/stan/.aws/:/app/.aws/
+    environment:
+      # DJANGO_SETTINGS_MODULE: 'settings.api'
+      # PORT: 8000
+      AWS_PROFILE: op_dev_power_user
+      HOME: /app
+
