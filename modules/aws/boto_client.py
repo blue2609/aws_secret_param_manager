@@ -1,6 +1,8 @@
 import boto3
 import pprint
 from ..aws.ssm.constants.parameter_store import SSM_PARAMETER_TYPE
+from botocore.exceptions import UnauthorizedSSOTokenError
+import subprocess
 
 
 class BotoClient:
@@ -13,6 +15,11 @@ class BotoClient:
             aws_service (str): the name of AWS service that we want to create client for
         """
         session = boto3.Session(profile_name=profile_name)
+        try:
+            sts = session.client('sts')
+            sts.get_caller_identity()
+        except UnauthorizedSSOTokenError as ex:
+            subprocess.run(["aws", "sso", "login", "--profile", profile_name])
         self.client = session.client(aws_service)
 
 
