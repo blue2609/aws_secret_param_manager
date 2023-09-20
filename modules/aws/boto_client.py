@@ -2,6 +2,7 @@ import boto3
 import pprint
 from ..aws.ssm.constants.parameter_store import SSM_PARAMETER_TYPE
 from botocore.exceptions import UnauthorizedSSOTokenError
+from typing import Optional
 import subprocess
 
 
@@ -34,7 +35,7 @@ class SsmClient(BotoClient):
         )
         return pprint.pformat(param_value)
 
-    def create_parameter(self, param_name: str, value: str, type: SSM_PARAMETER_TYPE):
+    def create_parameter(self, param_name: str, value: str, type: str, kms_key_id: str):
         """
         Create a new SSM parameter in SSM parameter store
 
@@ -46,5 +47,34 @@ class SsmClient(BotoClient):
         self.client.put_parameter(
             Name=param_name,
             Value=value,
-            Type=type.value
+            Type=type,
+            KeyId=kms_key_id
         )
+
+
+class KmsClient(BotoClient):
+
+    def __init__(self, profile_name: str):
+        super().__init__(profile_name, "kms")
+
+    def get_kms_key_with_alias(
+            self,
+            alias: str,
+            next_marker: Optional[str] = None,
+            limit: Optional[int] = 100
+    ):
+        response = self.client.list_aliases(Limit=limit)
+        next_marker = response.get("NextMarker")
+        truncated = response.get("Truncated")
+        key_id = next(
+            (
+                alias_details.get("TargetKeyId")
+                for alias_details in response.get('Aliases', [])
+                if alias_details.get("AliasName") == f"alias/{alias}"
+            ),
+            None
+        )
+        if key_id:
+            return key_id
+        if truncated and next_marker:
+            return self.get_kms_key_with_alias(alias=alias, next_marker=next_marker)

@@ -1,2 +1,3 @@
 simple-term-menu==1.6.1
 boto3==1.28.35
+pytest-bdd-ng==2.0.1
