@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class EnvSelection(Enum):
+class ENV_SELECTION(Enum):
     DEV_CLAIMS = "/dev/claims"
     DEV_SALES = "/dev/sales"
     DEV_RAPTOR = "/dev/raptor"
