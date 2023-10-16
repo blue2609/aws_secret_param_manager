@@ -1,0 +1,19 @@
+Screen {
+    layout: grid;
+    grid-size: 3;
+    grid-columns: 1fr 1fr 1fr;
+    grid-rows: 4% 5% 2% 5% 5%;
+}
+
+.box {
+    height: 100%;
+}
+
+#input_param_secret_value {
+    column-span: 2;
+    row-span: 2;
+}
+
+#label_param_value {
+    column-span: 2
+}
