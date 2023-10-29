@@ -12,3 +12,6 @@ __pycache__/
 
 # Environment Variables
 .env
+
+# Python Notebooks
+.ipynb_checkpoints/
