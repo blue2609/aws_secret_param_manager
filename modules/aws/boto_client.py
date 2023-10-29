@@ -35,6 +35,32 @@ class SsmClient(BotoClient):
     def __init__(self):
         super().__init__("ssm")
 
+    def get_parameters_by_path(
+            self,
+            path: str,
+            recursive: Optional[bool] = True,
+            with_decryption: bool = True
+    ):
+        response = self.client.get_parameters_by_path(
+            Path=path,
+            Recursive=recursive,
+            WithDecryption=with_decryption,
+            MaxResults=10
+        )
+        if isinstance(response, dict) and (param_list := response.get("Parameters")):
+            return [
+                (
+                    index,
+                    param_details.get("Name"),
+                    param_details.get("Type"),
+                    param_details.get("Value"),
+                    param_details.get("Version"),
+                    param_details.get("LastModifiedDate").strftime("%d-%m-%Y")
+                ) for index, param_details in enumerate(param_list, start=1)
+            ]
+
+        return []
+
     def get_parameter(self, param_path):
         param_value = self.client.get_parameter(
             Name=param_path,
