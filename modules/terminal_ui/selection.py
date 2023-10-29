@@ -18,3 +18,15 @@ class SelectionRecorder:
         )
         return f"/{cls.env_name}/{cls.service_name}/{cls.param_name}"
 
+class SetparamSelectionRecorder(SelectionRecorder):
+
+    @classmethod
+    def get_param_name(cls):
+        return super(SetparamSelectionRecorder, cls).get_param_name()
+
+class SearchparamSelectionRecorder(SelectionRecorder):
+
+    @classmethod
+    def get_param_name(cls):
+        return super(SearchparamSelectionRecorder, cls).get_param_name()
+
