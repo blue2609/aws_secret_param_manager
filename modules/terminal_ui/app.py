@@ -1,35 +1,31 @@
-from .constants import ENVIRONMENT_OPTIONS, SERVICE_PROJECT_NAME, PARAMETER_TYPE
-from .selection import SelectionRecorder
+from .selection import SetparamSelectionRecorder, SearchparamSelectionRecorder
 from textual import on
-from textual.widgets import Select, Input, Label, Header, Button
+from textual.widgets import Select, Input, Header, Button, DataTable
 from textual.app import App, ComposeResult
 from modules.aws.boto_client import KmsClient, SsmClient
+from .components.param_setter import SetParamComponent
+from .components.param_search import SearchParamComponent
+
 
 class SelectApp(App):
     CSS_PATH = "../../tui_style.tcss"
 
     def compose(self) -> ComposeResult:
-
         yield Header()
 
-        # First Row
-        yield Label("Choose Environment:", classes="box")
-        yield Label("Choose Project Name", classes="box")
-        yield Label("Parameter Name:", classes="box")
+        # Render "Set Parameter/Secret" Components
+        for component in SetParamComponent.section_header():
+            yield component
+        for component in SetParamComponent.creation_menu():
+            yield component
 
-        # Second Row
-        yield Select([(env_id, env_name) for env_id, env_name in ENVIRONMENT_OPTIONS], classes="box",
-                     id="select_environment")
-        yield Select([(service_name, project_name) for service_name, project_name in SERVICE_PROJECT_NAME],
-                     classes="box", id="select_project_name")
-        yield Input(placeholder="Write parameter name here...", classes="box", id="input_param_name")
+        # Render "Search Parameter/Secret" Components
+        for component in SearchParamComponent.section_header():
+            yield component
+        for component in SearchParamComponent.search_menu():
+            yield component
 
-        # Third Row
-        yield Label("Parameter Value:", classes="box", id="label_param_value")
-        yield Label("Type:", classes="box", id="label_type")
-
-        # Fourth Row
-        yield Input(placeholder="Write value here...", classes="box", id="input_param_secret_value")
+        yield DataTable(classes="box", id="param_secret_table")
 
         # Fourth and Fifth Row
         yield Select(
