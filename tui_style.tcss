@@ -1,0 +1,33 @@
+Screen {
+    layout: grid;
+    grid-size: 3;
+    grid-columns: 1fr 1fr 1fr;
+    grid-rows: 8% 4% 5% 5% 5% 5% 15% 5% 5% 5% 50%;
+}
+
+.box {
+    height: 100%;
+}
+
+#input_param_secret_value {
+    column-span: 2;
+    row-span: 2;
+}
+
+#label_param_value {
+    column-span: 2
+}
+#param_secret_table {
+    margin-top: 2;
+    column-span: 3;
+}
+
+#label_datatable_header {
+    margin-top: 4;
+}
+
+#button_search_parameter {
+    column-span: 3;
+    width: 100%;
+}
+
