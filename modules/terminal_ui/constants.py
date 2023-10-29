@@ -2,7 +2,7 @@ from modules.aws.ssm.constants.parameter_store import SSM_PARAMETER_TYPE
 
 ENVIRONMENT_OPTIONS = [
     ('dev', 'dev'),
-    ('dev-claims', 'dev'),
+    ('dev-claims', 'claims'),
     ('dev-raptor', 'raptor'),
     ('dev-sales', 'sales'),
     ('dev-rex', 'rex'),
