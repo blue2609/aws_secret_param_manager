@@ -39,22 +39,33 @@ class SelectApp(App):
 
     @on(Select.Changed)
     def select_changed(self, event: Select.Changed) -> None:
-        if event.select.id == "select_environment":
-            SelectionRecorder.env_name = event.value
-        if event.select.id == "select_project_name":
-            SelectionRecorder.proj_name = event.value
-        if event.select.id == "select_param_type":
-            SelectionRecorder.param_type = event.value
+        if "setparam" in event.select.id:
+            if event.select.id == "select_setparam_environment":
+                SetparamSelectionRecorder.env_name = event.value
+            if event.select.id == "select_setparam_project_name":
+                SetparamSelectionRecorder.proj_name = event.value
+            if event.select.id == "select_setparam_param_type":
+                SetparamSelectionRecorder.param_type = event.value
 
-        self.title = SelectionRecorder.get_param_name()
+            self.title = SetparamSelectionRecorder.get_param_name()
+
+        if "search" in event.select.id:
+            if event.select.id == "select_search_environment":
+                SearchparamSelectionRecorder.env_name = event.value
+            if event.select.id == "select_search_project_name":
+                SearchparamSelectionRecorder.proj_name = event.value
+
 
     @on(Input.Changed)
     def input_changed(self, event: Input.Changed) -> None:
         if event.input.id == "input_param_name":
-            SelectionRecorder.param_name = event.value
-            self.title = SelectionRecorder.get_param_name()
+            SetparamSelectionRecorder.param_name = event.value
+            self.title = SetparamSelectionRecorder.get_param_name()
         if event.input.id == "input_param_secret_value":
-            SelectionRecorder.value = event.value
+            SetparamSelectionRecorder.value = event.value
+
+        if event.input.id == "input_search_param_name":
+            SearchparamSelectionRecorder.param_name = event.value
 
     @on(Button.Pressed)
     def on_button_pressed(self, event: Button.Pressed) -> None:
