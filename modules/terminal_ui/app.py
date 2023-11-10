@@ -68,14 +68,18 @@ class SelectApp(App):
 
         if event.button.id == "button_create_parameter":
             ssm_client.create_parameter(
-                param_name=SetparamSelectionRecorder.get_param_name(),
+                param_name=str(SetparamSelectionRecorder.get_param_name()),
                 value=SetparamSelectionRecorder.value,
                 type=SetparamSelectionRecorder.param_type,
                 kms_key_id=kms_client.get_kms_key_with_alias("app-key")
             )
 
         if event.button.id == "button_search_parameter":
-            rows = ssm_client.get_parameters_by_path(SearchparamSelectionRecorder.get_param_name())
+            param_name = SearchparamSelectionRecorder.get_param_name()
+
+            rows = ssm_client.get_parameter(str(param_name))
+            if not rows:
+                rows = ssm_client.get_parameters_by_path(str(param_name))
 
             table = self.query_one(DataTable)
             table.clear()

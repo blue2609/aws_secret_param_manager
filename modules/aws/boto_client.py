@@ -62,11 +62,30 @@ class SsmClient(BotoClient):
         return []
 
     def get_parameter(self, param_path):
-        param_value = self.client.get_parameter(
-            Name=param_path,
-            WithDecryption=True
-        )
-        return pprint.pformat(param_value)
+        try:
+            response = self.client.get_parameter(
+                Name=param_path,
+                WithDecryption=True
+            )
+            if isinstance(response, dict) and (param_details := response.get("Parameter")):
+                return [
+                    (
+                        1,  # to indicate the first row
+                        param_details.get("Name"),
+                        param_details.get("Type"),
+                        param_details.get("Value"),
+                        param_details.get("Version"),
+                        param_details.get("LastModifiedDate").strftime("%d-%m-%Y")
+                    )
+                ]
+
+        except self.client.exceptions.ParameterNotFound as ex:
+            LOGGER.info(f"no parameter with name {param_path} is found", extra={
+                "exc_message": ex
+            })
+            return []
+
+
 
     def create_parameter(self, param_name: str, value: str, type: str, kms_key_id: str):
         """
