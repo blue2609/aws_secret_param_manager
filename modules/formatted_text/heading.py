@@ -10,5 +10,8 @@ class Heading:
         self.foreground = foreground
 
     def __rich_console__(self, console: Console, options: "ConsoleOptions"):
-        styled_text = Text(self.text, style=Style(color=self.foreground, bold=True))
+        styled_text = Text(
+            self.text,
+            style=Style(color=self.foreground, bold=True)
+        )
         return [Panel(styled_text, box=box.ROUNDED)]
