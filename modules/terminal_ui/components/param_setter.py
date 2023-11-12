@@ -5,11 +5,13 @@ from textual.widgets import (
     Button,
 )
 from modules.formatted_text.heading import Heading
+from modules.formatted_text.status_report import SetParamStatusReport
 from modules.terminal_ui.constants import (
     ENVIRONMENT_OPTIONS,
     SERVICE_PROJECT_NAME,
     PARAMETER_TYPE
 )
+from modules.terminal_ui.custom_widgets.labels import SetParamResultLabel
 
 
 class SetParamComponent:
@@ -29,7 +31,7 @@ class SetParamComponent:
 
         # Second Row
         yield Select(
-            [(env_id, env_name) for env_id, env_name in ENVIRONMENT_OPTIONS], classes="box",
+            [(env_id, env_name) for env_id, env_name in ENVIRONMENT_OPTIONS.CHOICES], classes="box",
             id="select_setparam_environment"
         )
         yield Select(
@@ -63,4 +65,5 @@ class SetParamComponent:
         )
 
         # Fifth Row
-        yield Button("Create Parameter", classes="box", id="button_create_parameter")
+        yield Button("Create | Update", classes="box", id="button_create_parameter")
+        yield SetParamResultLabel(classes="box")

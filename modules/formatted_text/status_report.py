@@ -4,7 +4,7 @@ from rich.text import Text
 from rich import box
 from rich.panel import Panel
 
-class Heading:
+class SetParamStatusReport:
     def __init__(self, text: str, foreground: str = "white"):
         self.text = text
         self.foreground = foreground
