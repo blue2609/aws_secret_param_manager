@@ -29,7 +29,7 @@ class SearchParamComponent:
 
         # Second Row
         yield Select(
-            [(env_id, env_name) for env_id, env_name in ENVIRONMENT_OPTIONS], classes="box",
+            [(env_id, env_name) for env_id, env_name in ENVIRONMENT_OPTIONS.CHOICES], classes="box",
             id="select_search_environment"
         )
         yield Select(
@@ -46,3 +46,5 @@ class SearchParamComponent:
 
         # Fifth Row
         yield Button("Search Param/Secret", classes="box", id="button_search_parameter")
+
+

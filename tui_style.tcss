@@ -2,7 +2,7 @@ Screen {
     layout: grid;
     grid-size: 3;
     grid-columns: 1fr 1fr 1fr;
-    grid-rows: 8% 4% 5% 5% 5% 5% 15% 5% 5% 5% 50%;
+    grid-rows: 8% 4% 5% 5% 5% 5% 8% 5% 5% 5% 5% 5% 47%;
 }
 
 .box {
@@ -31,3 +31,12 @@ Screen {
     width: 100%;
 }
 
+SearchErrorLabel {
+    column-span: 3;
+    width: 100%;
+}
+
+SetParamResultLabel {
+    column-span: 3;
+    width: 100%;
+}

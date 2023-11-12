@@ -50,3 +50,13 @@ class SsmParamName:
 
     def __str__(self):
         return self.param_name
+
+
+param_name = SsmParamName(
+    [
+        SsmParamNameComponent("dev")
+    ]
+)
+
+print(param_name, param_name.is_hierarchical)
+
