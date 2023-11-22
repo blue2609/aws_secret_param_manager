@@ -72,18 +72,15 @@ def add_parameters_to_parameter_store(
                     re.split(r'\s+#', value_comment_description)
                 )
             )
-            if len(value_comment_description) == 1:
+            len_comm = len(value_comment_description)
+            if len_comm <= 1:
                 print(f"There are no comments set for this SSM parameter [{key}]! SSM parameter failed to be created!")
                 continue
-            elif len(value_comment_description) == 2:
-                value = value_comment_description[0].strip('" ')
-                comment = value_comment_description[1].strip('" ')
-            elif len(value_comment_description) == 3:
-                # value, comment, description = value_comment_description
-                value = value_comment_description[0].strip('" ')
-                comment = value_comment_description[1].strip('" ')
+            value = value_comment_description[0].strip('" ')
+            comment = value_comment_description[1].strip('" ')
+            if len_comm == 3:
                 description = value_comment_description[2].strip('" ')
-            else:
+            if len_comm > 3:
                 print(
                     f"invalid SSM parameter definition in the '.ini' file for SSM parameter [{key}], skipping the creation of this parameter")
                 continue
