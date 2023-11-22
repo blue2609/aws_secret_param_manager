@@ -11,10 +11,10 @@ import logging
 load_dotenv()
 
 LOGGER = logging.getLogger(__name__)
+AWS_ACCOUNTS = ['dev', 'stage', 'prod']
 
 
 class BotoClient:
-    AWS_ACCOUNTS = ['dev', 'stage', 'prod']
 
     def __init__(self, env: str, aws_service: str):
         """
@@ -30,7 +30,7 @@ class BotoClient:
         self._init_client()
 
     def _validate_env(self):
-        if self.env not in ["dev", "stage", "prod"]:
+        if self.env not in AWS_ACCOUNTS:
             raise ValueError(
                 f"Wrong 'env' argument passed to 'BotoClient()'. Passed env is [{self.env}], expecting either 'dev', 'stage', 'prod'")
 
