@@ -112,11 +112,10 @@ if __name__ == "__main__":
     ini_file_path = os.path.abspath(
         os.path.expanduser(args.filepath)
     )
-    # Replace 'your_ini_file.ini' with the path to your INI file
-    # Replace 'your_profile_name' with the name of your AWS profile
+
     add_parameters_to_parameter_store(
         file_path=ini_file_path,
         profile_name=args.profile,
         kms_key_id=args.kmskeyid,
-        prefix=args.prefix
+        prefix="" if not args.prefix else args.prefix
     )
