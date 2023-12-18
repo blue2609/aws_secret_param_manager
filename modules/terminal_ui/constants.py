@@ -7,6 +7,14 @@ class AWS_ENV:
     STAGE = "stage"
     PROD = "prod"
 
+    @classmethod
+    def values(cls):
+        return [
+            getattr(cls, attr)
+            for attr in dir(cls)
+            if not attr.startswith("__") and type(getattr(cls, attr)) is str
+        ]
+
 
 class ENVIRONMENT_OPTIONS:
     DEV = "dev"
