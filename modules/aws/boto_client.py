@@ -71,30 +71,33 @@ class SsmClient(BotoClient):
             self,
             path: str,
             recursive: Optional[bool] = True,
-            with_decryption: bool = True
+            with_decryption: bool = True,
+            param_type: str = None
     ):
-
-        def get_next_set_of_parameters(next_token: str):
-            response = self.client.get_parameters_by_path(
-                Path=path,
-                Recursive=recursive,
-                WithDecryption=with_decryption,
-                MaxResults=10,
-                NextToken=next_token
-            )
-            response.get_parameter
 
         # Ensure that 'path' argument has '/' prefix
         if not path.startswith("/"):
             path = "/" + path
 
-        response = self.client.get_parameters_by_path(
-            Path=path,
-            Recursive=recursive,
-            WithDecryption=with_decryption,
-            MaxResults=10
-        )
+        kwargs = {
+            "Path": path,
+            "Recursive": recursive,
+            "WithDecryption": with_decryption,
+            "MaxResults": 10,
+        }
 
+        if param_type:
+            kwargs["ParameterFilters"] = [
+                {
+                    "Key": "Type",
+                    "Option": "Equals",
+                    "Values": [
+                        param_type
+                    ]
+                }
+            ]
+
+        response = self.client.get_parameters_by_path(**kwargs)
         all_params_list = []
         if isinstance(response, dict) and (param_list := response.get("Parameters")):
             for index, param_details in enumerate(param_list, start=1):
@@ -111,14 +114,10 @@ class SsmClient(BotoClient):
             next_token = response.get("NextToken")
             next_token_iteration = 1
             while next_token:
+                kwargs["NextToken"] = next_token
                 index_start = 10 * next_token_iteration + 1
-                response = self.client.get_parameters_by_path(
-                    Path=path,
-                    Recursive=recursive,
-                    WithDecryption=with_decryption,
-                    MaxResults=10,
-                    NextToken=next_token
-                )
+
+                response = self.client.get_parameters_by_path(**kwargs)
                 if isinstance(response, dict) and (param_list := response.get("Parameters")):
                     for index, param_details in enumerate(param_list, start=index_start):
                         all_params_list.append(
