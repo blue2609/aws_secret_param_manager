@@ -37,6 +37,9 @@ def set_args():
 
 def load_parameters(prefix: str, aws_env: str) -> list[tuple]:
     """
+    Args:
+        prefix (str): string such as '/claims', '/raptor' that prefix SSM parameter names we want to search for
+        aws_env (str): The AWS account we want to load SSM parameters from. Must be either 'dev', 'stage' or 'prod'
     Returns:
         list[tuple]: A list of parameter names and values in the format of [('param_name', 'value'), ('param_name', 'value')]
     """
@@ -48,7 +51,7 @@ def load_parameters(prefix: str, aws_env: str) -> list[tuple]:
     )
     final_param_list = list()
     for param in param_list:
-        param_name = param[1].strip(prefix).strip("/")
+        param_name = param[1].removeprefix(prefix).strip("/")
         if "/" in param_name:
             param_name = "/" + param_name
 
