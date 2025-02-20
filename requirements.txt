@@ -1,5 +1,5 @@
 simple-term-menu==1.6.1
 boto3==1.28.35
 pytest-bdd-ng==2.0.1
-textual==0.40.0
+textual==2.1.0
 python-dotenv==1.0.0

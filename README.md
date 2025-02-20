@@ -10,7 +10,7 @@
 This project aims to create our own internal library which provides these 2 functionalities:
 
 - Allow developers (and maybe other team in the business) to create new parameter in our AWS environments easily
-- Allow developers to pull the value of a parameter easily to their codebase
+- Allow developers to compare parameters and their values in different AWS accounts easily
 
 # Setting up new Parameter
 
@@ -21,7 +21,7 @@ inside `~/.aws/credentials` as well as `~/.aws/config` files
 In order to set up a new parameter, user can run `python main.py` file from the root directory of the project
 
 They will then be greeted with a list of AWS profiles you have on your machine and you need to select which profile (and
-therefore which AWS account) you want to use to set the parameter. It looks somethingl like below:
+therefore which AWS account) you want to use to set the parameter. It looks something like below:
 
 ```shell
 > default
