@@ -99,6 +99,22 @@ Going to the AWS SSM Parameter Store, you will then be able to see a new SSM par
 ![Alt text](./readme_files/images/new_ssm_parameter_created.png)
 
 
+# Download all SSM parameter store values into `.ini` file
+
+The Python application gives user the ability to download all AWS SSM parameter store `String` and `SecureString` parameters into an `.ini` file. All user needs to do is to run this command:
+
+```shell
+python ./create_local_ini.py \
+--prefixes /foo /bar / \
+--outputfile {path_to_ini_file}
+```
+
+The command above forces the application to search for parameters with `/foo` prefix first before checking if there's any parameter name with the same name specified with `/bar` prefix
+
+`{path_to_ini_file}` is path to the ini file like ~/Documents/temp/local.ini for example
+
+
+
 
 
 
